@@ -90,10 +90,10 @@ func TestCompareResults(t *testing.T) {
 }
 
 func BenchmarkSplatNaive(b *testing.B) {
-	for d := uint64(1); d < maxDepth; d++ {
+	for d := uint64(1); d < maxDepth; d += 3 {
 		title := fmt.Sprintf("depth=%d", d)
 		b.Run(title, func(innerB *testing.B) {
-			for _, density := range []int{1, 8, 32, 62, 64} {
+			for _, density := range []int{1, 8, 64} {
 				title2 := fmt.Sprintf("density=%d", density)
 				innerB.Run(title2, func(innerB2 *testing.B) {
 					benchmarkSplatNaive(innerB2, d, density)
@@ -111,10 +111,10 @@ func benchmarkSplatNaive(b *testing.B, depth uint64, density int) {
 }
 
 func BenchmarkSplatFancy(b *testing.B) {
-	for d := uint64(1); d < maxDepth; d++ {
+	for d := uint64(1); d < maxDepth; d += 3 {
 		title := fmt.Sprintf("depth=%d", d)
 		b.Run(title, func(innerB *testing.B) {
-			for _, density := range []int{1, 8, 32, 62, 64} {
+			for _, density := range []int{1, 8, 64} {
 				title2 := fmt.Sprintf("density=%d", density)
 				innerB.Run(title2, func(innerB2 *testing.B) {
 					benchmarkSplatFancy(innerB2, d, density)
