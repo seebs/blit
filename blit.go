@@ -46,11 +46,7 @@ func (b *Bitmap) SplatNaive(ids []uint64, values []uint64) *Bitmap {
 		mask := uint64(1 << bit)
 		value := values[idx]
 		for j := uint(0); j < nb.Depth; j++ {
-			if value&(1<<uint64(j)) != 0 {
-				nb.Bits[j][word] |= mask
-			} else {
-				nb.Bits[j][word] &^= mask
-			}
+			nb.Bits[j][word] = (nb.Bits[j][word] &^ mask) | (((value >> j) & 1) << bit)
 		}
 		nb.Bits[nb.Depth][word] |= mask
 	}
